@@ -30,3 +30,5 @@ find the header that was generated during the protobuf rule that is actually pas
 dependency as `build_bazel_remote_execution_v2_remote_execution_cpp_proto`. What I did find
 however is that if you add in `build_bazel_remote_execution_v2_remote_execution_cpp_proto` as
 a dep to the `cc_library` in [here](https://github.com/edbaunton/repro-grpc-bazel/blob/master/protos/cc_grpc_library.bzl#L96) then the protobuf header is visible to the build of the grpc library.
+
+So if you [uncomment line 2 and comment out line 3](https://github.com/edbaunton/repro-grpc-bazel/blob/master/protos/BUILD.bazel#L2-L3) to use my patched version you will find that the build works as we are pulling in the deps to the srcs and the header is visible.

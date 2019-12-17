@@ -1,0 +1,68 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
+#load("@com_google_protobuf//:protobuf.bzl", "cc_proto_library")
+load(":bb_cc_grpc_library.bzl", "bb_cc_grpc_library")
+
+proto_library(
+    name = "google_longrunning_operations_proto",
+    srcs = ["google/longrunning/operations.proto"],
+    deps = [
+        ":google_api_annotations_proto",
+        ":google_api_http_proto",
+        ":google_rpc_status_proto",
+        "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:empty_proto",
+    ],
+    strip_import_prefix = "/protos"
+)
+
+proto_library(
+    name = "google_api_http_proto",
+    srcs = ["google/api/http.proto"],
+    strip_import_prefix = "/protos"
+)
+
+proto_library(
+    name = "google_api_annotations_proto",
+    srcs = ["google/api/annotations.proto"],
+    deps = [
+        "google_api_http_proto",
+        "@com_google_protobuf//:descriptor_proto",
+    ],
+    strip_import_prefix = "/protos"
+)
+
+proto_library(
+    name = "google_rpc_status_proto",
+    srcs = ["google/rpc/status.proto"],
+    deps = ["@com_google_protobuf//:any_proto"],
+    strip_import_prefix = "/protos"
+)
+proto_library(
+    name = "build_bazel_semver_semver_proto",
+    srcs = ["build/bazel/semver/semver.proto"],
+    strip_import_prefix = "/protos"
+)
+
+proto_library(
+    name = "build_bazel_remote_execution_v2_remote_execution_proto",
+    srcs = ["build/bazel/remote/execution/v2/remote_execution.proto"],
+    deps =  [":build_bazel_semver_semver_proto",
+             ":google_api_annotations_proto",
+             ":google_longrunning_operations_proto",
+             "@com_google_protobuf//:duration_proto",
+             "@com_google_protobuf//:timestamp_proto",
+             ":google_rpc_status_proto"],
+    strip_import_prefix = "/protos"
+)
+
+cc_proto_library(
+    name="build_bazel_remote_execution_v2_remote_execution_cpp_proto",
+    deps = [":build_bazel_remote_execution_v2_remote_execution_proto"]
+)
+
+bb_cc_grpc_library(
+    grpc_only = True,
+    name = "build_bazel_remote_execution_v2_remote_execution_cpp_grpc",
+    srcs = [":build_bazel_remote_execution_v2_remote_execution_proto"],
+    deps = [":build_bazel_remote_execution_v2_remote_execution_cpp_proto"]
+)

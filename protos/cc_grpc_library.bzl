@@ -1,7 +1,7 @@
 load("@com_github_grpc_grpc//bazel:generate_cc.bzl", "generate_cc")
 load("@com_github_grpc_grpc//bazel:protobuf.bzl", "well_known_proto_libs")
 
-def bb_cc_grpc_library(
+def cc_grpc_library(
         name,
         srcs,
         deps,

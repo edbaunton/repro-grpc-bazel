@@ -1,6 +1,6 @@
 load("@rules_proto//proto:defs.bzl", "proto_library")
-#load("@com_google_protobuf//:protobuf.bzl", "cc_proto_library")
-load(":bb_cc_grpc_library.bzl", "bb_cc_grpc_library")
+#load(":bb_cc_grpc_library.bzl", "bb_cc_grpc_library")
+load("@com_github_grpc_grpc//bazel:cc_grpc_library.bzl", "cc_grpc_library")
 
 proto_library(
     name = "google_longrunning_operations_proto",
@@ -60,7 +60,7 @@ cc_proto_library(
     deps = [":build_bazel_remote_execution_v2_remote_execution_proto"]
 )
 
-bb_cc_grpc_library(
+cc_grpc_library(
     grpc_only = True,
     name = "build_bazel_remote_execution_v2_remote_execution_cpp_grpc",
     srcs = [":build_bazel_remote_execution_v2_remote_execution_proto"],
